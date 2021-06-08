@@ -58,6 +58,25 @@ kubectl delete deployment <name_of_deployment>
 kubectl apply -f <file_name>
 ```
 
+#### Deployment configuration file syntax (yaml file)
+```
+apiVersion: <version>
+kind: <what_to_create_Deployment_or_Service>
+
+metadata:
+  name: <name_of_deployment>
+  labels:
+specs:
+  replicas: <number_of_replicas_needed>
+  selector:
+  template:
+```
+
+- The file has mainly three parts,
+  - metadata
+  - specification
+  - status (managed by kubernetes, kubernetes will always check desired and actual state, if they are different then kubernetes will try to fix it. this is the basis of self healing feature. the data of the status is from etcd)
+
 ### Debugging
 
 #### Logs of a pod
