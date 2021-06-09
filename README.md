@@ -65,6 +65,16 @@ kubectl apply -f <file_name>
 kubectl describe deployment <deployment_name>
 ```
 
+#### Get the deployment config after deployment (from etcd) with status info
+```
+kubectl get deployment <deployment_name> -o yaml
+```
+
+#### Delete deployment using config file
+```
+kubectl delete -f <deployment_file_name>
+```
+
 #### Deployment configuration file syntax (yaml file)
 ```
 apiVersion: <version>
@@ -131,6 +141,11 @@ kubectl get service
 #### Describe a service
 ```
 kubectl describe service <service_name>
+```
+
+#### Delete service using config file
+```
+kubectl delete -f <service_file_name>
 ```
 
 ### Debugging
