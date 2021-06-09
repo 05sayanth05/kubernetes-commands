@@ -110,7 +110,7 @@ spec:
               key: <key_in_the_secret_file_to_reference>
         - name: <env_name>
           valueFrom:
-              configMapKeyRef:
+            configMapKeyRef:
               name: <name_of_configmap>
               key: <key_in_the_configmap_file_to_reference>
 ```
