@@ -100,6 +100,11 @@ spec:
         image: <image_name:version>
         ports:
         - containerPort: <port>
+        env:
+        - name: <env_name>
+          value: <env_value>
+        - name: <env_name>
+          value: <env_value>
 ```
 
 - The file has mainly three parts,
@@ -147,6 +152,24 @@ kubectl describe service <service_name>
 ```
 kubectl delete -f <service_file_name>
 ```
+
+### Secret
+
+#### Syntax of secret file
+```
+apiVersion: v1
+kind: Secret
+
+metadata:
+  name: <name_of_secret>
+type: <type_of_secret>
+
+data:
+  <key>: <value>
+  <key>: <value>
+```
+
+- The `type` will generally have `Opaque` as value, this specifies secret is key value store 
 
 ### Debugging
 
