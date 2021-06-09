@@ -104,7 +104,15 @@ spec:
         - name: <env_name>
           value: <env_value>
         - name: <env_name>
-          value: <env_value>
+          valueFrom:
+            secretKeyRef:
+              name: <name_of_secret>
+              key: <key_in_the_secret_file_to_reference>
+        - name: <env_name>
+          valueFrom:
+              configMapKeyRef:
+              name: <name_of_configmap>
+              key: <key_in_the_configmap_file_to_reference>
 ```
 
 - The file has mainly three parts,
@@ -117,13 +125,15 @@ spec:
 
 ### Service
 
-#### Syntax of service file for deployment
+#### Internal service
+
+##### Syntax of service file for deployment
 ```
 apiVersion: <version>
 kind: Service
 
 metadata:
-  name: <service_name>
+  name: <internal_service_name>
 
 spec:
   selector:
@@ -137,6 +147,35 @@ spec:
 - The request arrives at the port in which the service is listening
 - This request have to be forwarded to a pod which also has a port in which the application is running, that port is the targetPort
 - The targetPort have to be same as containerPort defined in the deployment 
+
+#### External service
+
+##### Syntax of service file for deployment
+```
+apiVersion: <version>
+kind: Service
+
+metadata:
+  name: <external_service_name>
+
+spec:
+  selector:
+    <key>: <value>
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: <port_in_which_the_service_should_listen_for_requests>
+      targetPort: <port_in_which_the_pod_is_listening_that_is_containerPort>
+      nodePort: <port_for_the_external_ip>
+```
+
+- `nodePort` will only accept values from `30000` to `32767`
+- `type` is set to `LoadBalancer` for creating external service
+
+##### Set external ip for an external service in minikube
+```
+minikube service <service_name>
+```
 
 #### Get services
 ```
@@ -165,11 +204,44 @@ metadata:
 type: <type_of_secret>
 
 data:
-  <key>: <value>
-  <key>: <value>
+  <key>: <base64_value>
+  <key>: <base64_value>
 ```
 
 - The `type` will generally have `Opaque` as value, this specifies secret is key value store 
+- The secrets have to be created before deployment in the cluster
+
+#### Creating secret in the cluster using config file
+```
+kubectl apply -f <secret_file_name>
+```
+
+#### Get secrets
+```
+kubectl get secret
+```
+
+### ConfigMap
+
+#### Syntax
+```
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: <configmap_name>
+
+data:
+  <key>: <value>
+```
+
+- The ConfigMap is a centralized data store for reference
+- This should be created before deployment because we are referring data for this
+
+#### Creating config map from the config file
+```
+kubectl apply -f <configmap_file_name>
+```
 
 ### Debugging
 
