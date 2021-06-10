@@ -230,9 +230,10 @@ kind: ConfigMap
 
 metadata:
   name: <configmap_name>
+  namespace: <namespace_name>
 
 data:
-  <key>: <value>
+  <key>: <service_name>.<value>
 ```
 
 - The ConfigMap is a centralized data store for reference
@@ -242,6 +243,31 @@ data:
 ```
 kubectl apply -f <configmap_file_name>
 ```
+
+#### Get components from a namespace
+```
+kubectl get <component_name_ex:pod> -n <namespace_name>
+```
+
+### Namespace
+
+- It is used to organize resources
+- It is a virtual cluster inside a kubernetes cluster
+- By default there are four namespaces
+
+#### Get namespaces
+```
+kubectl get namespace
+```
+
+#### Create namespace using kubectl
+```
+kubectl create namespace <name_of_namespace>
+```
+
+- Namespace can be created through config files
+
+
 
 ### Debugging
 
