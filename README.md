@@ -267,7 +267,10 @@ kubectl create namespace <name_of_namespace>
 
 - Namespace can be created through config files
 
-
+#### Get info about components in a namespace
+```
+kubectl get <component_ex:pod> -n <namespace_name>
+```
 
 ### Debugging
 
