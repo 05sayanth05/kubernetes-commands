@@ -192,6 +192,66 @@ kubectl describe service <service_name>
 kubectl delete -f <service_file_name>
 ```
 
+### Ingress
+
+- External service are mainly used in development environment in order to test the application quickly
+- In production environment ingress should be used
+
+#### Syntax
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: <ingress_name>
+
+spec:
+  tls:
+  - hosts:
+    - <host_name:ex:host.com>
+    secretName: <secret_name>
+  rules:
+  - host: <host_name_ex:host.com>
+  - http:
+      paths:
+      - path: <path_ex:/>
+        pathType: <type_of_path_ex:Prefix>
+        backend:
+          service:
+            name: <service_name>
+            port:
+              number: <port_of_service>
+        
+```
+
+- The `http` attribute does not correspond to the incoming user request
+- The value of `host` attribute should be a valid domain address
+  - This domain name should be mapped to the ip address of the node which is the entry point to the k8s cluster
+  - The entrypoint to the cluster will be the node with ingress controller pods
+
+#### Install ingress in minikube
+```
+minikube addons enable ingress
+```
+
+- This will enable the k8s nginx implementation of ingress
+
+#### TLS secret syntax
+```
+apiVersion: v1
+kind: Secret
+
+metadata:
+  name: <secret_name>
+  namespace: <namespace_in_which_the_corresponding_ingress_is_defined>
+
+data:
+  tls.crt: <base64_encoded_certificate>
+  tls.key: <base64_encoded_key>
+
+type: kubernetes.io/tls
+```
+
 ### Secret
 
 #### Syntax of secret file
