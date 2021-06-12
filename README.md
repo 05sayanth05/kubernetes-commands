@@ -332,6 +332,33 @@ kubectl create namespace <name_of_namespace>
 kubectl get <component_ex:pod> -n <namespace_name>
 ```
 
+### Data persistance
+
+- Kubernetes only provide the interface to storage, the selection and management of storage have to be done manually
+
+#### Persistance volume
+
+- PVs are not namespaced. They belong to the whole cluster
+
+##### Syntax
+```
+apiVersion: v1
+kind: PersistentVolume
+
+metadata:
+  name: <pv_name>
+
+spec:
+  capacity:
+    storage: <storage_ex:5Gi>
+  volumeMode: <mode>
+  accessMode:
+    - <accessMode1>
+  
+```
+
+- **not compleated**
+
 ### Debugging
 
 #### Logs of a pod
