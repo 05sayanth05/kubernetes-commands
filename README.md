@@ -172,6 +172,30 @@ spec:
 - `nodePort` will only accept values from `30000` to `32767`
 - `type` is set to `LoadBalancer` for creating external service
 
+#### Config file syntax for service with multiple ports opened
+```
+apiVersion: <version>
+kind: Service
+
+metadata:
+  name: <service_name>
+
+spec:
+  selector:
+    <key>: <value>
+  ports:
+    - name: <port_name>
+      protocol: <protocol_ex:TCP>
+      port: <port_number>
+      targetPort: <port_in_which_the_pod_is_listening_that_is_containerPort>
+    - name: <port_name>
+      protocol: <protocol_ex:TCP>
+      port: <port_number>
+      targetPort: <port_in_which_the_pod_is_listening_that_is_containerPort>
+```
+
+- This is same for both internal and external service
+
 ##### Set external ip for an external service in minikube
 ```
 minikube service <service_name>
