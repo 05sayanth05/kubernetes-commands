@@ -356,6 +356,14 @@ kubectl create namespace <name_of_namespace>
 kubectl get <component_ex:pod> -n <namespace_name>
 ```
 
+#### Syntax of yaml file
+```
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <namespace_name_here>
+```
+
 ### Data persistance
 
 - Kubernetes only provide the interface to storage, the selection and management of storage have to be done manually
